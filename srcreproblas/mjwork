@@ -1,0 +1,37 @@
+#!/bin/bash
+
+#PBS -N job
+#PBS -l nodes=1:ppn=12
+#PBS -j oe
+#PBS -l walltime=500:30:00
+#PBS -q debug 
+
+cd $PBS_O_WORKDIR
+
+NP=`cat $PBS_NODEFILE|wc -l`
+
+
+source /public/software/profile.d/compiler_intel-composer_xe_2017.0.098.sh
+
+source /public/software/profile.d/mpfr402.sh
+
+source /public/software/profile.d/mpi_mpich-3.2-gnu.sh
+#source /public/software/profile.d/compiler_intel-composer_xe2016.0.3.sh
+
+#mpicc mymm.c -o mymm
+#mpirun -np 4 ./mymm
+
+
+#./mytest_real_system_coo -pc_type ilu -pc_factor_levels 20 -pc_factor_pivot_in_blocks  -ksp_type gmres -ksp_gmres_restart 100 -ksp_monitor -ksp_rtol 1e-10 -ksp_max_it 3000000 -log_view >>log-${PBS_JOBID}.txt
+
+#mpirun -np 40 ./mymm >>log-${PBS_JOBID}.txt
+
+#./ex1 -ksp_monitor  -log_view
+
+#./ex1
+
+#mpirun -np 24 --bind-to core  ./ReproCG-master/src/CG_MPI ../Matrices/$mat 0 2 159 27 >>log-${PBS_JOBID}.txt
+
+mpirun -np $NP  -machinefile $PBS_NODEFILE --bind-to core  ./ReproCG-master/src/CG_MPI ../Matrices/$mat 0 2 159 27 >>log-${PBS_JOBID}.txt
+
+#mpirun -np $NP -machinefile $PBS_NODEFILE ./mymm >>log-${PBS_JOBID}.txt # >screen.log  2>&1
