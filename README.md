@@ -17,3 +17,7 @@ mpirun -np P --bind-to core ./ReproBiCGSTAB/src/CG_MPI ../Matrices/$mat 0 2 159 
 matrix from the Suite Sparse Matrix Collection
 
 mpirun -np P --bind-to core ./ReproBiCGSTAB/src/CG_MPI MAT.rb 1
+
+paper
+Comparison of Reproducible Parallel Preconditioned BiCGSTAB Algorithm Based on ExBLAS and ReproBLAS.
+https://dl.acm.org/doi/abs/10.1145/3578178.3578234
